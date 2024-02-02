@@ -17,14 +17,14 @@ FILES := $(wildcard $(SRC_DIR)/*)
 
 .PHONY: deps.header
 deps.header:
-	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/duckdb/duckdb.git
+	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/michaelmdresser/duckdb.git
 	cp duckdb/src/include/duckdb.h duckdb.h
 
 .PHONY: deps.darwin.amd64
 deps.darwin.amd64:
 	if [ "$(shell uname -s | tr '[:upper:]' '[:lower:]')" != "darwin" ]; then echo "Error: must run build on darwin"; false; fi
 
-	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/duckdb/duckdb.git
+	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/michaelmdresser/duckdb.git
 	cd duckdb && \
 	CFLAGS="-target x86_64-apple-macos11 -O3" CXXFLAGS="-target x86_64-apple-macos11 -O3" BUILD_SHELL=0 BUILD_UNITTESTS=0 make -j 2 && \
 	mkdir -p lib && \
@@ -38,7 +38,7 @@ deps.darwin.amd64:
 deps.darwin.arm64:
 	if [ "$(shell uname -s | tr '[:upper:]' '[:lower:]')" != "darwin" ]; then echo "Error: must run build on darwin"; false; fi
 
-	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/duckdb/duckdb.git
+	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/michaelmdresser/duckdb.git
 	cd duckdb && \
 	CFLAGS="-target arm64-apple-macos11 -O3" CXXFLAGS="-target arm64-apple-macos11 -O3" BUILD_SHELL=0 BUILD_UNITTESTS=0 make -j 2 && \
 	mkdir -p lib && \
@@ -52,10 +52,10 @@ deps.darwin.arm64:
 deps.linux.amd64:
 	if [ "$(shell uname -s | tr '[:upper:]' '[:lower:]')" != "linux" ]; then echo "Error: must run build on linux"; false; fi
 
-	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/duckdb/duckdb.git
+	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/michaelmdresser/duckdb.git
 	cd duckdb && \
-	CFLAGS="-O3" CXXFLAGS="-O3" make -j 2 && \
-	BUILD_SHELL=0 BUILD_UNITTESTS=0 make -j 2 && \
+	CFLAGS="-O3" CXXFLAGS="-O3" make -j 8 && \
+	BUILD_SHELL=0 BUILD_UNITTESTS=0 make -j 8 && \
 	mkdir -p lib && \
 	for f in `find . -name '*.o'`; do cp $$f lib; done && \
 	cd lib && \
@@ -67,7 +67,7 @@ deps.linux.amd64:
 deps.linux.arm64:
 	if [ "$(shell uname -s | tr '[:upper:]' '[:lower:]')" != "linux" ]; then echo "Error: must run build on linux"; false; fi
 
-	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/duckdb/duckdb.git
+	git clone -b v${DUCKDB_VERSION} --depth 1 https://github.com/michaelmdresser/duckdb.git
 	cd duckdb && \
 	CC="aarch64-linux-gnu-gcc" CXX="aarch64-linux-gnu-g++" CFLAGS="-O3" CXXFLAGS="-O3" BUILD_SHELL=0 BUILD_UNITTESTS=0 make -j 2 && \
 	mkdir -p lib && \
